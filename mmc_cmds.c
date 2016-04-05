@@ -2074,6 +2074,57 @@ int do_manufacturer(int nargs, char **argv)
 	return 0;
 }
 
+int do_progcid(int nargs, char **argv)
+{
+	int ret, fd, i;
+	char *device;
+	char cid[CID_SIZE] = {0};
+	struct mmc_ioc_cmd idata = {0};
+
+	if (strlen(argv[1]) != CID_SIZE*2) {	
+		printf("Error! Size of CID invalid...\n");
+		exit(1);
+		}
+	
+	for (i=0; i < CID_SIZE; i++) {
+		ret = sscanf(&argv[1][i*2], "%2hhx", &cid[i]);
+		if(!ret){
+				perror("CID should be HEX!\n");
+				exit(1);
+			}
+		}
+
+	fprintf(stderr, "Programming new CID %s\n", argv[1]);
+	printf("\n");
+	
+	idata.data_timeout_ns = 0x10000000;
+	idata.write_flag = 1;
+	idata.opcode = PROGRAM_CID;
+	idata.arg = 0;
+	idata.flags = MMC_RSP_SPI_R1 | MMC_RSP_R1 | MMC_CMD_ADTC;
+	idata.blksz = CID_SIZE;
+	idata.blocks = 1;
+	idata.data_ptr = (__u64)(unsigned int)cid;
+
+	device = argv[2];
+	fd = open(device, O_RDWR);
+	if (fd < 0) {
+		perror("open device");
+		exit(1);
+	}
+
+	if (ioctl(fd, MMC_IOC_CMD, &idata)) {
+		perror("ioctl");
+		exit(1);
+	}
+
+	printf("Done!\n");
+
+	close(fd);
+
+	return 0;
+}
+
 int do_cache_ctrl(int value, int nargs, char **argv)
 {
 	__u8 ext_csd[512];

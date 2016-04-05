@@ -177,6 +177,10 @@
 #define MMC_SEND_MANUFACTURER_3		62
 #define MMC_SEND_MANUFACTURER_4		63
 
+#define PROGRAM_CID		26
+
+#define CID_SIZE		16
+
 /* From kernel linux/mmc/core.h */
 #define MMC_RSP_PRESENT	(1 << 0)
 #define MMC_RSP_136	(1 << 1)		/* 136 bit response */
