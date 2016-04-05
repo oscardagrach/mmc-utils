@@ -201,6 +201,16 @@ static struct Command commands[] = {
 		"Run Field Firmware Update with <image name> on <device>.\n",
 	  NULL
 	},
+	{ do_manufacturer, 5,
+	  "manufacturer", "<cmd number> " "<cmd type> "
+		"<response type> " "<argument> " "<device>\n"
+		"Send a manufacturer specific command to the <device>.\n"
+		"<cmd number>    - [60 - 63]\n"
+		"<cmd type>      - [ac] (adtc is not implemented)\n"
+		"<response type> - [r1, r1b]\n"
+		"<argument>      - 4 byte arbitrary argument in hex",
+	  NULL
+	},
 	{ 0, 0, 0, 0 }
 };
 

@@ -170,6 +170,12 @@
 #define EXT_CSD_REV_V4_1		1
 #define EXT_CSD_REV_V4_0		0
 
+/* Vendor Commands */
+
+#define MMC_SEND_MANUFACTURER_1		60
+#define MMC_SEND_MANUFACTURER_2		61
+#define MMC_SEND_MANUFACTURER_3		62
+#define MMC_SEND_MANUFACTURER_4		63
 
 /* From kernel linux/mmc/core.h */
 #define MMC_RSP_PRESENT	(1 << 0)
